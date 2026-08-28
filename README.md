@@ -85,6 +85,12 @@ cd cli
 
 Contributions are welcome! Please read our [contributing guidelines](CONTRIBUTING.md) first.
 
+## Related Projects
+
+- **ReqBeam** - A modern, full-featured API testing and development platform built with Next.js 15, TypeScript, Prisma, and Tailwind CSS. ReqBeam provides a beautiful web interface and powerful CLI for testing, organizing, and managing your APIs.
+
+  [GitHub Repository](https://github.com/reqbeam/reqbeam)
+
 ## License
 
 MIT
