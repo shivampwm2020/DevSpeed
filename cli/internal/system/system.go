@@ -1,7 +1,12 @@
 package system
 
 import (
+	"bufio"
+	"os"
+	"os/exec"
 	"runtime"
+	"strconv"
+	"strings"
 )
 
 // SystemInfo represents the system information collected by DevSpeed
@@ -22,25 +27,45 @@ func GetSystemInfo() (*SystemInfo, error) {
 		LogicalCores: runtime.NumCPU(),
 	}
 
-	// For development, we'll use placeholder values
-	// In a real implementation, these would be determined by system calls
-	switch runtime.GOOS {
-	case "darwin":
-		info.CPUModel = "Apple M1"
-		info.OSVersion = "macOS 14.0"
-		info.MemoryBytes = 16 * 1024 * 1024 * 1024 // 16 GB
-	case "linux":
-		info.CPUModel = "AMD Ryzen 9"
-		info.OSVersion = "Ubuntu 22.04"
-		info.MemoryBytes = 32 * 1024 * 1024 * 1024 // 32 GB
-	case "windows":
-		info.CPUModel = "Intel i7"
-		info.OSVersion = "Windows 11"
-		info.MemoryBytes = 16 * 1024 * 1024 * 1024 // 16 GB
-	default:
-		info.CPUModel = "Unknown CPU"
-		info.OSVersion = "Unknown Version"
-		info.MemoryBytes = 8 * 1024 * 1024 * 1024 // 8 GB
+	// Get OS version from /etc/os-release
+	if info.OS == "linux" {
+		if content, err := os.ReadFile("/etc/os-release"); err == nil {
+			lines := strings.Split(string(content), "\n")
+			for _, line := range lines {
+				if strings.HasPrefix(line, "PRETTY_NAME=") {
+					info.OSVersion = strings.Trim(strings.TrimPrefix(line, "PRETTY_NAME="), "\"\n\r")
+					break
+				}
+			}
+		}
+	}
+
+	// Get CPU information from lscpu
+	if out, err := exec.Command("lscpu").Output(); err == nil {
+		scanner := bufio.NewScanner(strings.NewReader(string(out)))
+		for scanner.Scan() {
+			line := scanner.Text()
+			if strings.Contains(line, "Model name:") {
+				info.CPUModel = strings.TrimSpace(strings.Split(line, ":")[1])
+				break
+			}
+		}
+	}
+
+	// Get memory information from /proc/meminfo
+	if content, err := os.ReadFile("/proc/meminfo"); err == nil {
+		lines := strings.Split(string(content), "\n")
+		for _, line := range lines {
+			if strings.HasPrefix(line, "MemTotal:") {
+				parts := strings.Fields(line)
+				if len(parts) >= 2 {
+					if memKB, err := strconv.ParseUint(parts[1], 10, 64); err == nil {
+						info.MemoryBytes = memKB * 1024 // Convert KB to bytes
+					}
+				}
+				break
+			}
+		}
 	}
 
 	return info, nil
