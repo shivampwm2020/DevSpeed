@@ -12,12 +12,15 @@ The experience is designed to feel like **Speedtest.net / Geekbench for develope
 # Binary download (all platforms)
 curl -fsSL https://devspeed.dev/install.sh | sh
 
-# macOS (with Homebrew)
-brew install devspeed
+# Or using wget
+curl -fsSL https://devspeed.dev/install.sh -o install.sh && sh install.sh
 
-# Windows (with winget)
-winget install DevSpeed
-```
+# From source
+git clone https://github.com/shivampwm2020/DevSpeed.git
+cd DevSpeed
+cd cli
+./build.sh build
+# Binary will be available at ../devspeed
 
 ### Usage
 
@@ -55,30 +58,27 @@ The current benchmark suite (v0.1.0) includes:
 
 ## Development
 
-### Project Structure
-
-```text
-devspeed/
-├── cli/                  # Go CLI implementation
-├── web/                  # Next.js web interface
-├── api/                  # Backend API (Node.js/Fastify)
-├── packages/             # Shared packages
-├── docs/                 # Documentation
-├── fixtures/             # Test fixtures for benchmarks
-└── README.md
-```
-
-### Prerequisites
-
-- Go 1.22+
-- Node.js 18+
-- PostgreSQL
-
-### Building the CLI
+### Building from Source
 
 ```bash
+# Clone the repository
+git clone https://github.com/shivampwm2020/DevSpeed.git
+cd DevSpeed
+
+# Install Go dependencies
+# DevSpeed requires Go 1.22+
+go mod tidy
+
+# Build the CLI for your platform
+./scripts/release.sh
+
+# The binaries will be in the releases/ directory
+ls releases/
+
+# For local development, you can build just for your platform
 cd cli
 ./build.sh build
+# Binary will be at ../devspeed
 ```
 
 ## Contributing
