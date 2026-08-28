@@ -2,7 +2,7 @@
 
 set -e
 
-# DevSpeed Release Script
+# ReqBeam Release Script
 # Builds the CLI for multiple platforms
 
 # Change to cli directory
@@ -26,17 +26,17 @@ for platform in ${PLATFORMS}; do
     # Set GOOS and GOARCH for cross-compilation
     CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build \
         -ldflags "-s -w" \
-        -o ${RELEASES_DIR}/devspeed-${OS}-${ARCH} \
+        -o ${RELEASES_DIR}/reqbeam-${OS}-${ARCH} \
         ./cmd/devspeed/main.go
     
     # Create compressed version
     if command -v gzip >/dev/null; then
-        gzip -9 -c ${RELEASES_DIR}/devspeed-${OS}-${ARCH} > ${RELEASES_DIR}/devspeed-${OS}-${ARCH}.gz
+        gzip -9 -c ${RELEASES_DIR}/reqbeam-${OS}-${ARCH} > ${RELEASES_DIR}/reqbeam-${OS}-${ARCH}.gz
     fi
     
     # Create zip version
     if command -v zip >/dev/null; then
-        zip -9 ${RELEASES_DIR}/devspeed-${OS}-${ARCH}.zip ${RELEASES_DIR}/devspeed-${OS}-${ARCH}
+        zip -9 ${RELEASES_DIR}/reqbeam-${OS}-${ARCH}.zip ${RELEASES_DIR}/reqbeam-${OS}-${ARCH}
     fi
 done
 
@@ -47,4 +47,4 @@ fi
 
 echo "Releases created in ${RELEASES_DIR}/"
 echo "Available binaries:"
-ls -1 ${RELEASES_DIR}/devspeed-*
+ls -1 ${RELEASES_DIR}/reqbeam-*

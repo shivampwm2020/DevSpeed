@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build script for DevSpeed CLI
+# Build script for ReqBeam CLI
 
 set -e
 
@@ -7,20 +7,20 @@ CLI_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$CLI_DIR")"
 
 build() {
-    echo "Building DevSpeed CLI..."
+    echo "Building ReqBeam CLI..."
     cd "$CLI_DIR"
-    go build -o "$ROOT_DIR/devspeed" ./cmd/devspeed
-    echo "Build complete: $ROOT_DIR/devspeed"
+    go build -o "$ROOT_DIR/reqbeam" ./cmd/devspeed
+    echo "Build complete: $ROOT_DIR/reqbeam"
 }
 
 run() {
     build
-    "$ROOT_DIR/devspeed" "$@"
+    "$ROOT_DIR/reqbeam" "$@"
 }
 
 clean() {
     echo "Cleaning build artifacts..."
-    rm -f "$ROOT_DIR/devspeed"
+    rm -f "$ROOT_DIR/reqbeam"
 }
 
 # Default action

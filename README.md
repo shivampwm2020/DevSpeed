@@ -10,10 +10,10 @@ The experience is designed to feel like **Speedtest.net / Geekbench for develope
 
 ```bash
 # Binary download (all platforms)
-curl -fsSL https://devspeed.dev/install.sh | sh
+curl -fsSL https://reqbeam.dev/install.sh | sh
 
 # Or using wget
-curl -fsSL https://devspeed.dev/install.sh -o install.sh && sh install.sh
+curl -fsSL https://reqbeam.dev/install.sh -o install.sh && sh install.sh
 
 # From source
 git clone https://github.com/shivampwm2020/DevSpeed.git

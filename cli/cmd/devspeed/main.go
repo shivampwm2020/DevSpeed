@@ -1,14 +1,14 @@
-	package main
+package main
 
-	import (
-		"flag"
-		"fmt"
-		"os"
-		"strings"
+import (
+	"flag"
+	"fmt"
+	"os"
+	"strings"
 
-		"devspeed/cli/internal/benchmark"
-		"devspeed/cli/internal/system"
-	)
+	"devspeed/cli/internal/benchmark"
+	"devspeed/cli/internal/system"
+)
 
 
 func main() {
@@ -84,7 +84,7 @@ func main() {
 	// Handle subcommands
 	switch command {
 	case "version":
-		fmt.Println("DevSpeed CLI v0.1.0")
+		fmt.Println("ReqBeam CLI v0.1.0")
 	case "system":
 		systemInfo()
 	case "run":
@@ -181,14 +181,14 @@ func runBenchmarks(verbose bool) {
 	fmt.Println("for detailed diagnostics.")
 	fmt.Println()
 	fmt.Println("Result:")
-	fmt.Println("https://devspeed.dev/r/x7ad92")
+	fmt.Println("https://reqbeam.dev/r/x7ad92")
 }
 
 func help() {
-	fmt.Println("Usage: devspeed [command] [flags]")
+	fmt.Println("Usage: reqbeam [command] [flags]")
 	fmt.Println()
 	fmt.Println("Commands:")
-	fmt.Println("  devspeed          Run benchmarks (default)")
+	fmt.Println("  reqbeam           Run benchmarks (default)")
 	fmt.Println("  version           Show version information")
 	fmt.Println("  system            Show system information")
 	fmt.Println("  run               Run benchmarks")
